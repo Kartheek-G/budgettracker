@@ -1,13 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import BudgetEntryScreen from './screens/BudgetEntryScreen';
+import BudgetListingScreen from './screens/BudgetListingScreen';
+import { Provider as StoreProvider } from 'react-redux'
+import store from './redux/store'
+
+const Stack =  createStackNavigator()
+
+function MyStack(){
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Budget" component={BudgetListingScreen} />
+      <Stack.Screen name="Budget Entry" component={BudgetEntryScreen} />
+    </Stack.Navigator>
+  )
+}
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <StoreProvider store = {store}>
+      <NavigationContainer>
+         <MyStack />
+      </NavigationContainer>
+
+    </StoreProvider>
+    
   );
 }
 
@@ -19,3 +39,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
